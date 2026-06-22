@@ -225,13 +225,6 @@
         fn: function ({ assert }) {
           const cfg = MafiaFairAssign._trollConfig;
           const darkCases = [
-            "Mohammad",
-            "Mohamed Reza",
-            "Muhammad-99",
-            "Mamad joon",
-            "آقا محمد",
-            "محمّد جان",
-            "محمدرضا",
             "Shohreh",
             "Shoreh khanoom",
             "Shouhreh-7",
@@ -251,8 +244,6 @@
             "Payam",
             "Payam joon",
             "پیام جان",
-            "Farzaneh-7",
-            "فرزانه جان",
             "Mehran",
             "مهران خان",
           ];
@@ -265,9 +256,6 @@
             "Anahid",
             "Anahita",
             "آناهید",
-            "Gisoo",
-            "Gisu joon",
-            "گیسو جان",
             "Golsa",
             "گلسا جون",
           ];
@@ -277,6 +265,16 @@
             "مهدی3",
             "آرتین جان",
             "آرتینجان",
+            "Mohammad",
+            "Mohamed Reza",
+            "Muhammad-99",
+            "Mamad joon",
+            "آقا محمد",
+            "محمّد جان",
+            "محمدرضا",
+            "Gisoo",
+            "Gisu joon",
+            "گیسو جان",
           ];
           const removedDarkCases = [
             "Behnam",
@@ -329,13 +327,13 @@
       {
         name: "troll config: trollSystemEnabled disables troll behavior",
         fn: function ({ assert }) {
-          const names = ["Mahdi", "Masoud", "Golsa", "Naser", "Farzaneh", "Khodayar"];
+          const names = ["Mahdi", "Masoud", "Golsa", "Naser", "Mehran", "Khodayar"];
           const legacy = {
             Mahdi: { recentGames: Array(40).fill({ roleId: "citizen" }) },
             Masoud: { recentGames: Array(40).fill({ roleId: "citizen" }) },
             Golsa: { recentGames: Array(40).fill({ roleId: "citizen" }) },
             Naser: { recentGames: Array(40).fill({ roleId: "mafia" }) },
-            Farzaneh: { recentGames: Array(40).fill({ roleId: "mafia" }) },
+            Mehran: { recentGames: Array(40).fill({ roleId: "mafia" }) },
             Khodayar: { recentGames: Array(40).fill({ roleId: "mafia" }) },
           };
           MafiaFairAssign.init({
@@ -365,13 +363,13 @@
       {
         name: "troll mode: disabled turns off troll behavior",
         fn: function ({ assert }) {
-          const names = ["Mahdi", "Masoud", "Golsa", "Naser", "Farzaneh", "Khodayar"];
+          const names = ["Mahdi", "Masoud", "Golsa", "Naser", "Mehran", "Khodayar"];
           const legacy = {
             Mahdi: { recentGames: Array(40).fill({ roleId: "citizen" }) },
             Masoud: { recentGames: Array(40).fill({ roleId: "citizen" }) },
             Golsa: { recentGames: Array(40).fill({ roleId: "citizen" }) },
             Naser: { recentGames: Array(40).fill({ roleId: "mafia" }) },
-            Farzaneh: { recentGames: Array(40).fill({ roleId: "mafia" }) },
+            Mehran: { recentGames: Array(40).fill({ roleId: "mafia" }) },
             Khodayar: { recentGames: Array(40).fill({ roleId: "mafia" }) },
           };
           MafiaFairAssign.init({
@@ -410,7 +408,7 @@
           try {
             for (let c = 0; c < TROLL_TEST_PLAYER_COUNTS.length; c++) {
               const nPlayers = TROLL_TEST_PLAYER_COUNTS[c];
-              const names = fillNames(["Khodayar", "Jahanbakhsh", "Shohreh", "Mohammad", "Ghasem", "Masoud", "Anahid", "Gisoo", "Golsa"], nPlayers);
+              const names = fillNames(["Khodayar", "Jahanbakhsh", "Shohreh", "Payam", "Ghasem", "Mehran", "Anahid", "Setareh", "Golsa"], nPlayers);
               const legacy = emptyLegacy(names);
               assignHistory(legacy, names, [0, 1, 2, 3, 4, 5], "mafia");
               assignHistory(legacy, names, Array.from({ length: nPlayers - 6 }, (_, i) => i + 6), "citizen");
@@ -478,7 +476,7 @@
             MafiaFairAssign.configure({ groupPickMode: "deficit", trollSystemEnabled: true, trollSystemMode: "assignment" });
             for (let c = 0; c < TROLL_TEST_PLAYER_COUNTS.length; c++) {
               const nPlayers = TROLL_TEST_PLAYER_COUNTS[c];
-              const targetNames = ["Khodayar", "Payam", "Farzaneh", "Mehran"];
+              const targetNames = ["Khodayar", "Payam", "Jahanbakhsh", "Mehran"];
               for (let t = 0; t < targetNames.length; t++) {
                 const targetName = targetNames[t];
                 if (cfg.prob > 0) {
@@ -531,7 +529,7 @@
             MafiaFairAssign.configure({ groupPickMode: "deficit", trollSystemEnabled: true, trollSystemMode: "assignment" });
             for (let c = 0; c < TROLL_TEST_PLAYER_COUNTS.length; c++) {
               const nPlayers = TROLL_TEST_PLAYER_COUNTS[c];
-              const targetNames = ["Mahtab", "Naser", "Anahid", "Gisoo", "Golsa"];
+              const targetNames = ["Mahtab", "Naser", "Anahid", "Setareh", "Golsa"];
               for (let t = 0; t < targetNames.length; t++) {
                 const targetName = targetNames[t];
                 if (cfg.whitelistProb > 0) {

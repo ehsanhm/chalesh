@@ -3,7 +3,7 @@
  * Loads per-scenario files from flow-configs/*.js, then provides getFlowConfig().
  *
  * IMPORTANT: The step order in these configs defines the order events happen in the game.
- * Status Check must save and display data in this same order. See design/00-night-phases-and-status-check.md.
+ * Status Check must save and display data in this same order.
  *
  * Structure per scenario:
  *   intro_day: [step ids]

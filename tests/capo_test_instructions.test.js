@@ -1,5 +1,5 @@
 /**
- * Tests for Capo (Kabo) scenario per design/capo_test_instructions.md.
+ * Tests for Capo (Kabo) scenario instructions.
  * Verifies flow structure, night step order, role-specific behavior, and back navigation.
  * Every instruction (10–300) is covered by at least one test.
  *

@@ -176,7 +176,8 @@
         const draw2 = appState.draw && appState.draw.players ? appState.draw.players : draw;
         assert(draw2[victimIdx].alive !== false, scenarioId + ": victim should be alive again after reopen and going back");
       },
-    })),
+      })),
+    ],
   };
 
   window.REVERT_VOTE_AFTER_REOPEN_TESTS = suite;

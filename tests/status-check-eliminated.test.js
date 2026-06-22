@@ -2,7 +2,7 @@
  * Tests that Status Check always shows eliminated players, regardless of how
  * they died (vote, Sixth Sense, mafia shot, etc.).
  * Also tests Night 3 Status Check shows Eliminated, Revived, and Role Switched
- * when Saul Buy succeeds (design/godfather_test_instructions.md instruction 375).
+ * when Saul Buy succeeds.
  *
  * Run from tests/run.html (loads flow-engine, effect-registry, then this).
  */

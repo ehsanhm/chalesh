@@ -1,7 +1,7 @@
 /**
  * Tests that player selections in the Flow use player cards, not dropdowns.
- * Per design/player-selection-cards.md: "Always use cards for selections —
- * never radio buttons, checkboxes, or dropdowns when a card-based choice is feasible."
+ * Player selections should use cards, not radio buttons, checkboxes, or dropdowns
+ * when a card-based choice is feasible.
  *
  * Run from tests/run.html.
  */

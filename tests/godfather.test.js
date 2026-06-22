@@ -1,5 +1,5 @@
 /**
- * Godfather (Pedarkhande) scenario tests based on design/godfather_test_instructions.md.
+ * Godfather (Pedarkhande) scenario tests.
  * Verifies flow logic: Leon shield, Matador disable, Kane reveal, Saul Buy, Constantine revive,
  * Saul Buy revert on Back, Kane step skipped when dead, Watson 24h, etc.
  *
