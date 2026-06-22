@@ -1,0 +1,374 @@
+MAFIA GAME - COMPLETE ROLE LIST
+================================
+Total Roles: 65
+  - Mafia Team:       23 roles
+  - City/Citizen Team: 39 roles
+  - Independent Team:  2 roles
+
+================================
+MAFIA TEAM ROLES (23)
+================================
+
+1. Mafia / مافیا ساده
+   Team: Mafia
+   Ability: None
+   Description: No standalone ability. Coordinate at night; mislead during the day.
+
+2. Mafia Boss / رئیس مافیا
+   Team: Mafia
+   Ability: Leader + Shot
+   Description: Mafia leader who decides the final night shot. Always shows as "citizen" (negative) to the Detective.
+
+3. Godfather / پدرخوانده
+   Team: Mafia
+   Ability: Leader + Shot
+   Description: Mafia leader who decides the night shot. Always shows as "citizen" (negative) to the Detective.
+
+4. Swindler / شیاد
+   Team: Mafia
+   Ability: Disrupts Detective Inquiry
+   Description: Each night targets one player. If the Detective is targeted, that night's inquiry shows "citizen" regardless of the actual target's identity. Knows mafia but wakes independently.
+
+5. NATO / ناتو
+   Team: Mafia
+   Ability: Guess a Role
+   Description: Once per game can guess a player's exact role; if correct, that player is eliminated unconditionally. Usually replaces the night shot.
+
+6. Negotiator / مذاکره‌کننده
+   Team: Mafia
+   Ability: Convert/Negotiate
+   Description: When 1-2 mafia are eliminated, can activate a Negotiation Night. Picks a target: if Simple Citizen or Armored, they join mafia; otherwise negotiation fails.
+
+7. Natasha / ناتاشا
+   Team: Mafia
+   Ability: Night Silence
+   Description: Each night silences one player—they cannot speak the following day. Cannot silence the same player on consecutive nights.
+
+8. Dr. Lecter / دکتر لکتر
+   Team: Mafia
+   Ability: Save (Mafia)
+   Description: Mafia doctor. Can save any player from the night shot each night. Self-save only once per game.
+
+9. Joker Mafia / جوکر مافیا
+   Team: Mafia
+   Ability: Flip Detective Inquiry
+   Description: Max 2 times per game, can flip a player's Detective inquiry result. Cannot target the same player on consecutive nights.
+
+10. Matador / ماتادور
+    Team: Mafia
+    Ability: Disable Ability
+    Description: Each night marks one player; that player loses their ability for 24 hours. Cannot choose the same player two consecutive nights.
+
+11. Saul Goodman / ساول گودمن
+    Team: Mafia
+    Ability: Buy/Convert
+    Description: Once per game can buy a Simple Citizen and convert them to Simple Mafia.
+
+12. Mafia Don / دن مافیا  [Capo scenario]
+    Team: Mafia
+    Ability: Leader + Antidote
+    Description: Mafia leader; always shows "citizen" to Detective. Has one antidote (against Herbalist poison).
+
+13. Witch / جادوگر  [Capo scenario]
+    Team: Mafia
+    Ability: Reflect to Target
+    Description: Each night picks a citizen; if they have an ability, their action reflects onto themselves (Detective→inquiry about self; Herbalist→poisons self; Armorsmith→armors self).
+
+14. Executioner / جلاد  [Capo scenario]
+    Team: Mafia
+    Ability: Guess a Role
+    Description: Like NATO: if exact role guess is correct, the target is eliminated unconditionally.
+
+15. Informant / خبرچین  [Capo scenario]
+    Team: Mafia
+    Ability: Spy
+    Description: Mafia spy; shows "citizen" to Detective. If the Village Chief links them, they respond like a citizen without exposing the Village Chief.
+
+16. Al Capone / آلکاپن  [Zodiac scenario]
+    Team: Mafia
+    Ability: Leader
+    Description: Mafia leader; always shows "citizen" (negative) to the Detective.
+
+17. Magician / شعبده‌باز  [Zodiac scenario]
+    Team: Mafia
+    Ability: Disable Ability
+    Description: Each night picks a city player (coordinating with mafia) and disables their night ability.
+
+18. Bomber / بمب‌گذار  [Zodiac scenario]
+    Team: Mafia
+    Ability: Bomb
+    Description: Once per game plants a bomb: gives host a secret code (1-4) and picks a target. Target must guess the code.
+
+19. Terrorist / تروریست  [Classic Pro scenario]
+    Team: Mafia
+    Ability: Day Drag-out
+    Description: Mafia member who doesn't know the mafia team and vice versa. Detective inquiry always returns "Citizen". During day can announce "I'm the Terrorist" and drag one chosen player out.
+
+20. Hostage-Taker / گروگانگیر  [Takavar scenario]
+    Team: Mafia
+    Ability: Block Ability (Solo)
+    Description: Wakes independently each night and blocks one citizen's night ability. Cannot target the same player on consecutive nights.
+
+21. Don / دن  [Representative scenario]
+    Team: Mafia
+    Ability: Leader + Betrayal Vote
+    Description: Mafia leader; always shows "citizen" to Detective. Once per day may secretly add or subtract 1 vote from any representative's tally.
+
+22. Rebel / یاغی  [Representative scenario]
+    Team: Mafia
+    Ability: 2nd-in-command / Assassin
+    Description: Second-in-command. If Don or Hacker is eliminated, becomes the Assassin and may eliminate one player before the daily vote.
+
+23. Hacker / هکر  [Representative scenario]
+    Team: Mafia
+    Ability: Block Ability
+    Description: Each night blocks one player's ability; that player cannot use their night power that night.
+
+
+================================
+CITY / CITIZEN TEAM ROLES (39)
+================================
+
+24. Citizen / شهروند ساده
+    Team: City
+    Ability: None
+    Description: No night ability. Help find mafia through discussion and voting.
+
+25. Detective / کارآگاه
+    Team: City
+    Ability: Night Inquiry
+    Description: Each night can check one player's side. Mafia Boss and Godfather always show as "citizen" (negative).
+
+26. Inspector / بازپرس
+    Team: City
+    Ability: Interrogation
+    Description: Once per game can call an interrogation: selects two players who briefly defend; whole table votes only between those two.
+
+27. Doctor / پزشک
+    Team: City
+    Ability: Night Save
+    Description: Can save one player per night from mafia shot. Cannot save the same person on consecutive nights. Self-save only once per game.
+
+28. Dr. Watson / دکتر واتسون
+    Team: City
+    Ability: Save
+    Description: Acts like the Doctor: saves one player per night. Self-save only once per game.
+
+29. Researcher / محقق
+    Team: City
+    Ability: Link/Bond
+    Description: Each night (not intro night) can link to a player. If Researcher is eliminated, the linked player is also eliminated.
+
+30. Invulnerable / رویین‌تن
+    Team: City
+    Ability: Night Armor
+    Description: Cannot be killed by mafia's night shot. Only eliminated via daytime vote or special conditions.
+
+31. Armored / زره‌پوش
+    Team: City
+    Ability: Armor + Return
+    Description: Immune to night shots. If voted out during the day, role is revealed and they return to the game.
+
+32. Sniper / تک‌تیرانداز
+    Team: City
+    Ability: Limited Shot
+    Description: One shot per game. If shoots a citizen: Sniper is eliminated. If shoots mafia: target is eliminated.
+
+33. Professional / حرفه‌ای
+    Team: City
+    Ability: Shot
+    Description: Can shoot at night. If shoots a citizen by mistake, Professional is eliminated.
+
+34. Reporter / خبرنگار
+    Team: City
+    Ability: Negotiation Inquiry
+    Description: In the Negotiator scenario, wakes on Negotiation Night and learns whether the negotiation target was a citizen/armored or not.
+
+35. Representative / نماینده
+    Team: City
+    Ability: Day Power
+    Description: Once per game may use one of two day powers: veto the current vote or protect one player from elimination that day.
+
+36. Hard John / جان‌سخت
+    Team: City
+    Ability: Extra Life + Inquiry
+    Description: Survives the first mafia night shot (usually unaware). Twice per game may ask host for the side of any eliminated player.
+
+37. Psychiatrist / روانپزشک
+    Team: City
+    Ability: Mute
+    Description: Twice per game can remove a player's ability to speak for that session.
+
+38. Mayor / شهردار
+    Team: City
+    Ability: Veto/Out
+    Description: Once per game (when 2+ players in defense and Mayor not one of them) may cancel the vote or directly order one defendant eliminated.
+
+39. Seller / فروشنده
+    Team: City
+    Ability: Remove Ability
+    Description: Once per game removes a player's ability for the rest of the game. Host announces the target the following morning.
+
+40. Priest / کشیش
+    Team: City
+    Ability: Support Talk
+    Description: Each night selects players to receive extra speaking time the next day. Can also neutralize Natasha's silence.
+
+41. Judge / قاضی
+    Team: City
+    Ability: Change Vote
+    Description: Once per game can void the day vote result, usually declared at night to take effect the following day.
+
+42. Commander / فرمانده
+    Team: City
+    Ability: Confirm Shot
+    Description: After the Sniper chooses a target, Commander wakes and can confirm or cancel the shot.
+
+43. Village Chief / کدخدا  [Capo scenario]
+    Team: City
+    Ability: City Link
+    Description: Twice per game can link to a player: that player wakes without knowing Village Chief's role. If citizen/Informant—safe; if mafia—Village Chief is eliminated.
+
+44. Heir / وارث  [Capo scenario]
+    Team: City
+    Ability: Inherit Role
+    Description: On intro night selects a player to inherit from. Until that player is eliminated, Heir is immortal. When target is eliminated, Heir inherits their ability.
+
+45. Herbalist / عطار  [Capo scenario]
+    Team: City
+    Ability: Poison + Antidote
+    Description: Each night can poison one player. If poisoned player survives the day, a vote decides whether to give the antidote. Don has one antidote.
+
+46. Armorsmith / زره‌ساز  [Capo scenario]
+    Team: City
+    Ability: One-time Save
+    Description: Once per game can save themselves from a shot or elimination.
+
+47. Suspect / مظنون  [Capo scenario]
+    Team: City
+    Ability: Positive Inquiry
+    Description: A citizen whose Detective inquiry shows "mafia" (positive).
+
+48. Guard / محافظ  [Zodiac scenario]
+    Team: City
+    Ability: Anti-bomb / Anti-Zodiac
+    Description: When bomb is announced, may sacrifice and take target's place, guessing the disarm code. Zodiac shooting Guard kills Zodiac.
+
+49. Ocean / اوشن  [Zodiac scenario]
+    Team: City
+    Ability: Wake Citizens
+    Description: Twice per game can wake a group of citizens for silent consultation. Accidentally waking mafia/Zodiac eliminates Ocean.
+
+50. Gunslinger / تفنگدار  [Zodiac scenario]
+    Team: City
+    Ability: Give Guns
+    Description: Has 3 guns: 2 blanks + 1 real (doesn't know which). Gives guns at night; recipients may shoot during next day.
+
+51. Leon / لئون  [Godfather scenario]
+    Team: City
+    Ability: City Pro
+    Description: Can shoot at night. If shoots a citizen, Leon is eliminated. Has one vest (survives first mafia shot).
+
+52. Constantine / کنستانتین  [Godfather scenario]
+    Team: City
+    Ability: Revive
+    Description: Once per game can revive an eliminated player—only if their role hasn't been announced by host.
+
+53. Citizen Kane / همشهری کین  [Godfather scenario]
+    Team: City
+    Ability: Reveal
+    Description: Once per game marks a player; if mafia, host reveals their role next day and Kane is eliminated the following night. If wrong, nothing happens.
+
+54. Sheriff / کلانتر  [Classic Pro scenario]
+    Team: City
+    Ability: See Mafia Identity
+    Description: Each night the host reveals one live Mafia member's identity to the Sheriff.
+
+55. Freemason / فراماسون  [Classic Pro scenario]
+    Team: City
+    Ability: ID Check / Mutual Kill
+    Description: Each night picks a player. If that player is Mafia, both are immediately eliminated. If Citizen, both learn the other is on city side.
+
+56. Cowboy / کابوی  [Classic Pro scenario]
+    Team: City
+    Ability: Day Duel
+    Description: During daytime discussion can announce a duel with any player; both are eliminated.
+
+57. Commando / تکاور  [Takavar scenario]
+    Team: City
+    Ability: Counter-shot on Death
+    Description: If Mafia kills Commando at night, Commando immediately fires one counter-shot. Hitting Mafia → both die; hitting citizen → only Commando dies.
+
+58. Guardian / نگهبان  [Takavar scenario]
+    Team: City
+    Ability: Protect Ability
+    Description: Each night protects 1-2 players (2 if 8+ alive; 1 if 7 or fewer). Protected players cannot be blocked by Hostage-Taker.
+
+59. Guide / راهنما  [Representative scenario]
+    Team: City
+    Ability: Inquiry / Exposure Risk
+    Description: Each night selects a player: if citizen, receives inquiry result (like Detective); if mafia, that mafia member learns Guide's identity. Cannot target same player on consecutive nights.
+
+60. Minemaker / مین‌گذار  [Representative scenario]
+    Team: City
+    Ability: One-time Mine
+    Description: Once per game plants a mine on one player. If mafia shoots that same player that night, mine activates and a volunteering mafia member is also eliminated.
+
+61. Lawyer / وکیل  [Representative scenario]
+    Team: City
+    Ability: Day Immunity
+    Description: Once per game selects a player to be immune from vote-elimination the following day.
+
+62. Bodyguard / محافظ  [Representative scenario]
+    Team: City
+    Ability: Protect from Assassination
+    Description: Each night protects one player from the Rebel's assassination. Bodyguard themselves is also immune to assassination.
+
+63. Soldier / سرباز  [Representative scenario]
+    Team: City
+    Ability: One-time Bullet
+    Description: At night gives one bullet to a player. If given to mafia → Soldier is eliminated. If given to citizen → that citizen may shoot during next day.
+
+
+================================
+INDEPENDENT TEAM ROLES (2)
+================================
+
+64. Zodiac / زودیاک  [Zodiac scenario]
+    Team: Independent
+    Ability: Even-night Shot
+    Description: Can shoot on even nights only; immune to night shots. Eliminated only by vote, day gun, or bomb. Shooting the Guard causes Zodiac's own death.
+
+65. Nostradamus / نوستراداموس  [Godfather scenario]
+    Team: Independent
+    Ability: Intro Night Choice
+    Description: Wakes only on intro night. Marks 3 players; host reveals how many are mafia. Nostradamus chooses their side based on this information.
+
+
+================================
+SCENARIOS INDEX
+================================
+
+Standard:        Mafia, Mafia Boss, Godfather, Swindler, NATO, Negotiator, Natasha,
+                 Dr. Lecter, Joker Mafia, Matador, Saul Goodman,
+                 Citizen, Detective, Inspector, Doctor, Dr. Watson, Researcher,
+                 Invulnerable, Armored, Sniper, Professional, Reporter,
+                 Representative, Hard John, Psychiatrist, Mayor, Seller,
+                 Priest, Judge, Commander
+
+Capo:            Mafia Don, Witch, Executioner, Informant,
+                 Village Chief, Heir, Herbalist, Armorsmith, Suspect
+
+Zodiac:          Al Capone, Magician, Bomber,
+                 Guard, Ocean, Gunslinger,
+                 Zodiac (independent)
+
+Godfather:       Leon, Constantine, Citizen Kane,
+                 Nostradamus (independent)
+
+Classic Pro:     Terrorist, Sheriff, Freemason, Cowboy
+
+Takavar:         Hostage-Taker, Commando, Guardian
+
+Representative:  Don, Rebel, Hacker,
+                 Guide, Minemaker, Lawyer, Bodyguard, Soldier

@@ -1,0 +1,10 @@
+.agents/
+.claude/
+.cursor/
+test-results/
+
+node_modules/
+dist/
+build/
+coverage/
+*.log

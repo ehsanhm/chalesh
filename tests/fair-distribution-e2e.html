@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mafia — Fair distribution E2E</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f0f13;
+      color: #e0e0e0;
+      padding: 24px;
+      min-height: 100vh;
+    }
+
+    h1 { font-size: 1.3rem; letter-spacing: 0.05em; color: #aaa; margin-bottom: 8px; }
+    .sub { font-size: 0.78rem; color: #64748b; margin-bottom: 20px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    .players {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .card {
+      background: #1a1a22;
+      border: 1px solid #2a2a35;
+      border-radius: 10px;
+      padding: 14px 16px;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .card.non-town { border-color: #8b2020; background: #1f1218; }
+    .card.town { border-color: #1a6b3a; background: #121f18; }
+
+    .card .player-name { font-size: 1.5rem; font-weight: 700; color: #fff; }
+    .card .role-name { margin-top: 5px; font-size: 0.75rem; color: #888; letter-spacing: 0.03em; min-height: 16px; }
+
+    .card .group-badge {
+      display: inline-block;
+      margin-top: 7px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      visibility: hidden;
+    }
+    .card.non-town .group-badge { background: #3d0e0e; color: #e05555; visibility: visible; }
+    .card.town .group-badge { background: #0e2e1a; color: #4eca7f; visibility: visible; }
+
+    .round-counter { margin-top: 10px; font-size: 0.78rem; color: #444; text-align: center; }
+
+    .sidebar { display: flex; flex-direction: column; gap: 14px; }
+
+    .count-box {
+      background: #1a1a22;
+      border: 1px solid #2a2a35;
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .count-box h2 {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 12px;
+    }
+    .count-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .count-row:last-child { margin-bottom: 0; }
+    .count-label { font-size: 0.8rem; flex: 1; }
+    .count-label.non-town-label { color: #c04040; }
+    .count-label.town-label { color: #3da864; }
+    .count-input {
+      width: 52px;
+      background: #0f0f13;
+      border: 1px solid #2a2a35;
+      color: #eee;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    .count-input:focus { outline: none; border-color: #3a6fd8; }
+    .count-warning { font-size: 0.72rem; color: #c08020; margin-top: 6px; display: none; }
+
+    .app-test-url { font-size: 0.78rem; word-break: break-all; }
+    .app-test-url a { color: #60a5fa; }
+
+    button {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-assign { background: #3a6fd8; color: #fff; }
+    .btn-batch { background: #2563eb; color: #fff; font-size: 0.85rem; padding: 9px; }
+    .btn-clear { background: #2a2a35; color: #888; font-size: 0.78rem; padding: 7px; }
+
+    .prob-box {
+      background: #1a1a22;
+      border: 1px solid #2a2a35;
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .prob-box h2 {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .prob-select {
+      width: 100%;
+      background: #0f0f13;
+      border: 1px solid #2a2a35;
+      color: #ccc;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .prob-section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      margin-top: 10px;
+    }
+    .prob-section-label.nt-lbl { color: #8b3030; }
+    .prob-section-label.t-lbl { color: #2a6b44; }
+    .prob-section-label:first-child { margin-top: 0; }
+
+    .group-chance-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #2a2a35;
+    }
+    .group-chance-label { font-size: 0.72rem; color: #666; width: 120px; flex-shrink: 0; }
+    .group-chance-bar-bg { flex: 1; height: 8px; background: #2a2a35; border-radius: 99px; overflow: hidden; }
+    .group-chance-bar { height: 100%; border-radius: 99px; background: #8b2020; transition: width 0.4s ease; }
+    .group-chance-pct { font-size: 0.72rem; color: #666; width: 36px; text-align: right; font-variant-numeric: tabular-nums; }
+
+    .prob-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .prob-label {
+      font-size: 0.7rem; color: #666; width: 120px; flex-shrink: 0;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .prob-bar-bg { flex: 1; height: 5px; background: #2a2a35; border-radius: 99px; overflow: hidden; }
+    .prob-bar { height: 100%; border-radius: 99px; transition: width 0.4s ease; }
+    .prob-bar.nt { background: #8b2020; }
+    .prob-bar.t { background: #1a6b3a; }
+    .prob-pct { font-size: 0.68rem; color: #555; width: 34px; text-align: right; font-variant-numeric: tabular-nums; }
+
+    .history-box {
+      background: #1a1a22;
+      border: 1px solid #2a2a35;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .history-box h2 {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+      padding: 11px 14px 8px;
+      border-bottom: 1px solid #2a2a35;
+    }
+    .history-scroll { max-height: 380px; overflow-y: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.72rem; }
+    thead th {
+      position: sticky; top: 0; background: #1a1a22; color: #555;
+      font-weight: 600; text-align: left; padding: 5px 8px;
+      border-bottom: 1px solid #2a2a35;
+    }
+    tbody tr { border-bottom: 1px solid #1f1f28; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody td { padding: 4px 8px; color: #888; white-space: nowrap; }
+    tbody td.nt-cell { color: #c04040; }
+    tbody td.t-cell { color: #3da864; }
+    tbody td.round-cell { color: #444; font-variant-numeric: tabular-nums; }
+
+    .batch-box {
+      background: #1a1a22;
+      border: 1px solid #2a2a35;
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .batch-box h2 {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .batch-box pre { font-size: 0.7rem; color: #94a3b8; white-space: pre-wrap; word-break: break-word; }
+  </style>
+</head>
+<body>
+
+<h1>FAIR DISTRIBUTION — E2E</h1>
+<p class="sub">Uses <code>mafia-role-assigner.js</code> + <code>roles.js</code> (same multiset + decay logic as the main app). In-memory history for this page only.</p>
+<p class="sub" id="batchRunBanner" style="margin-top:-8px;color:#94a3b8">Each batch run simulates <strong id="batchRunBannerNum">100</strong> games (set in sidebar).</p>
+<p class="sub app-test-url">Full app test mode: <a href="file:///E:/code/GIT/_old/mafia_game/index.html?testMode=1">file:///E:/code/GIT/_old/mafia_game/index.html?testMode=1</a></p>
+
+<div class="layout">
+
+  <div>
+    <div class="players" id="playerGrid"></div>
+    <p class="round-counter" id="roundCounter"></p>
+  </div>
+
+  <div class="sidebar">
+
+    <div class="count-box">
+      <h2>Slot counts</h2>
+      <div class="count-row">
+        <span class="count-label non-town-label">Bad (non-city)</span>
+        <input class="count-input" id="nonTownCount" type="number" min="0" value="3" onchange="onCountChange()">
+      </div>
+      <div class="count-row">
+        <span class="count-label town-label">Good (city)</span>
+        <input class="count-input" id="townCount" type="number" min="0" value="7" onchange="onCountChange()">
+      </div>
+      <div class="count-warning" id="countWarning"></div>
+      <div class="count-row" style="margin-top:10px">
+        <span class="count-label">Batch runs</span>
+        <input class="count-input" id="batchRunCount" type="number" min="1" max="100000" value="100" title="How many games to simulate in one batch" oninput="syncBatchRunUi()" onchange="syncBatchRunUi()">
+      </div>
+    </div>
+
+    <button class="btn-assign" id="assignBtn" onclick="doAssign()">Assign roles</button>
+    <button class="btn-batch" id="btnRunBatch" onclick="runBatch()"><span id="btnRunBatchText">Run batch (100)</span></button>
+    <button class="btn-clear" onclick="doClear()">Clear history</button>
+
+    <div class="batch-box" id="batchBox" style="display:none">
+      <h2 id="batchStatsTitle">Batch stats</h2>
+      <pre id="batchOut"></pre>
+    </div>
+
+    <div class="prob-box">
+      <h2>Weights (inspector)</h2>
+      <select class="prob-select" id="probSelect" onchange="renderProbs()"></select>
+      <div id="probContent"></div>
+    </div>
+
+    <div class="history-box">
+      <h2>History (last 50 rounds)</h2>
+      <div class="history-scroll">
+        <table>
+          <thead><tr id="histHead"></tr></thead>
+          <tbody id="histBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../roles.js"></script>
+<script src="../mafia-role-assigner.js"></script>
+<script>
+  const PLAYERS = ['A','B','C','D','E','F','G','H','I','J'];
+
+  /** Pedarkhande-like non-town variety, then mafia. */
+  const NON_TOWN_TEMPLATE = ['godfather', 'matador', 'saulGoodman', 'mafia', 'mafia', 'mafia', 'mafia', 'mafia'];
+
+  const legacyStore = {};
+  const rounds = [];
+
+  function getLegacyRecord(name) {
+    if (!legacyStore[name]) legacyStore[name] = { recentGames: [] };
+    return legacyStore[name];
+  }
+
+  function recordRound(assignment) {
+    const round = {};
+    for (let i = 0; i < PLAYERS.length; i++) {
+      const name = PLAYERS[i];
+      const roleId = assignment[i] || 'citizen';
+      round[name] = roleId;
+      const rec = getLegacyRecord(name);
+      rec.recentGames.push({ roleId });
+      const max = 50;
+      if (rec.recentGames.length > max) rec.recentGames = rec.recentGames.slice(-max);
+    }
+    rounds.push(round);
+    if (rounds.length > 50) rounds.shift();
+  }
+
+  function teamFa(rid) {
+    return (roles[rid] && roles[rid].teamFa) ? roles[rid].teamFa : 'شهر';
+  }
+
+  function isTownRoleId(rid) {
+    return !!(roles[rid] && roles[rid].teamFa === 'شهر');
+  }
+
+  function isNonTownRoleId(rid) {
+    return !isTownRoleId(rid);
+  }
+
+  function buildPool(nonTownN, townN) {
+    const slots = [];
+    for (let i = 0; i < nonTownN; i++) {
+      slots.push(NON_TOWN_TEMPLATE[i] || 'mafia');
+    }
+    for (let j = 0; j < townN; j++) slots.push('citizen');
+    return slots;
+  }
+
+  function parseBatchRunCount() {
+    let n = parseInt(document.getElementById('batchRunCount').value, 10);
+    if (!Number.isFinite(n) || n < 1) n = 1;
+    if (n > 100000) n = 100000;
+    return n;
+  }
+
+  function syncBatchRunUi() {
+    const n = parseBatchRunCount();
+    const el = document.getElementById('btnRunBatchText');
+    if (el) el.textContent = 'Run batch (' + n + ')';
+    const banner = document.getElementById('batchRunBannerNum');
+    if (banner) banner.textContent = String(n);
+  }
+
+  function shortRole(role) {
+    if (!role || role === '—') return '—';
+    if (role === 'mafia') return 'M';
+    if (role === 'citizen') return 'C';
+    if (role === 'godfather') return 'GF';
+    if (role === 'matador') return 'Mat';
+    if (role === 'saulGoodman') return 'Saul';
+    return role.length > 6 ? role.slice(0, 5) + '…' : role;
+  }
+
+  function onCountChange() {
+    const nt = parseInt(document.getElementById('nonTownCount').value, 10) || 0;
+    const tn = parseInt(document.getElementById('townCount').value, 10) || 0;
+    const warn = document.getElementById('countWarning');
+    const btn = document.getElementById('assignBtn');
+
+    if (nt + tn !== PLAYERS.length) {
+      warn.textContent = 'Non-town + town must equal ' + PLAYERS.length + ' (currently ' + (nt + tn) + ').';
+      warn.style.display = 'block';
+      btn.disabled = true;
+      btn.style.opacity = '0.4';
+    } else {
+      warn.style.display = 'none';
+      btn.disabled = false;
+      btn.style.opacity = '';
+    }
+    renderProbs();
+    syncBatchRunUi();
+  }
+
+  function doAssign() {
+    const nt = parseInt(document.getElementById('nonTownCount').value, 10) || 0;
+    const tn = parseInt(document.getElementById('townCount').value, 10) || 0;
+    if (nt + tn !== PLAYERS.length) return;
+
+    const pool = buildPool(nt, tn);
+    MafiaFairAssign.init({ getLegacyRecord: getLegacyRecord });
+    const assignment = MafiaFairAssign.buildAssignment(pool, PLAYERS, { roles: roles });
+    if (!assignment) return;
+
+    for (let i = 0; i < PLAYERS.length; i++) {
+      const role = assignment[i];
+      const group = isNonTownRoleId(role) ? 'non-town' : 'town';
+      const card = document.getElementById('card-' + PLAYERS[i]);
+      card.className = 'card ' + group;
+      document.getElementById('role-' + PLAYERS[i]).textContent = role;
+      document.getElementById('badge-' + PLAYERS[i]).textContent = group === 'non-town' ? 'bad' : 'good';
+    }
+
+    recordRound(assignment);
+    updateRoundCounter();
+    renderHistory();
+    renderProbs();
+  }
+
+  function runBatch() {
+    const nt = parseInt(document.getElementById('nonTownCount').value, 10) || 0;
+    const tn = parseInt(document.getElementById('townCount').value, 10) || 0;
+    if (nt + tn !== PLAYERS.length) return;
+
+    const nRuns = parseBatchRunCount();
+
+    const pool = buildPool(nt, tn);
+    MafiaFairAssign.init({ getLegacyRecord: getLegacyRecord });
+
+    const stats = {};
+    for (const p of PLAYERS) stats[p] = {};
+
+    const btn = document.getElementById('btnRunBatch');
+    btn.disabled = true;
+    for (let g = 0; g < nRuns; g++) {
+      const assignment = MafiaFairAssign.buildAssignment(pool, PLAYERS, { roles: roles });
+      if (!assignment) continue;
+      for (let i = 0; i < PLAYERS.length; i++) {
+        const r = assignment[i] || 'citizen';
+        stats[PLAYERS[i]][r] = (stats[PLAYERS[i]][r] || 0) + 1;
+      }
+      recordRound(assignment);
+    }
+
+    const rows = PLAYERS.map((n) => {
+      let bad = 0;
+      let good = 0;
+      const sn = stats[n] || {};
+      for (const rid of Object.keys(sn)) {
+        const c = sn[rid] || 0;
+        if (isTownRoleId(rid)) good += c;
+        else bad += c;
+      }
+      return { name: n, good: good, bad: bad };
+    });
+    rows.sort((a, b) => b.bad - a.bad);
+
+    let txt = 'Runs: ' + nRuns + '\n\nGood (city) / Bad (non-city) counts per player:\n';
+    for (const r of rows) txt += r.name + ': good=' + r.good + ' bad=' + r.bad + '\n';
+    txt += '\nSpread (bad): ' + (rows[0].bad - rows[rows.length - 1].bad);
+
+    document.getElementById('batchOut').textContent = txt;
+    const batchTitle = document.getElementById('batchStatsTitle');
+    if (batchTitle) batchTitle.textContent = 'Batch stats (' + nRuns + ' runs)';
+    document.getElementById('batchBox').style.display = 'block';
+
+    for (let i = 0; i < PLAYERS.length; i++) {
+      const last = rounds[rounds.length - 1];
+      const role = last[PLAYERS[i]];
+      const group = isNonTownRoleId(role) ? 'non-town' : 'town';
+      const card = document.getElementById('card-' + PLAYERS[i]);
+      card.className = 'card ' + group;
+      document.getElementById('role-' + PLAYERS[i]).textContent = role;
+      document.getElementById('badge-' + PLAYERS[i]).textContent = group === 'non-town' ? 'bad' : 'good';
+    }
+
+    updateRoundCounter();
+    renderHistory();
+    renderProbs();
+    btn.disabled = false;
+  }
+
+  function doClear() {
+    for (const k of Object.keys(legacyStore)) delete legacyStore[k];
+    rounds.length = 0;
+    MafiaFairAssign.init({ getLegacyRecord: getLegacyRecord });
+    for (const p of PLAYERS) {
+      document.getElementById('card-' + p).className = 'card';
+      document.getElementById('role-' + p).textContent = '—';
+      document.getElementById('badge-' + p).textContent = '';
+    }
+    updateRoundCounter();
+    renderHistory();
+    renderProbs();
+    document.getElementById('batchBox').style.display = 'none';
+  }
+
+  function renderProbs() {
+    const player = document.getElementById('probSelect').value;
+    const el = document.getElementById('probContent');
+
+    const nt = parseInt(document.getElementById('nonTownCount').value, 10) || 0;
+    const tn = parseInt(document.getElementById('townCount').value, 10) || 0;
+    const weights = PLAYERS.map((p) => {
+      const d = MafiaFairAssign._badSideDeficit(p, roles, PLAYERS.length, nt);
+      return { name: p, w: Math.max(0.001, d + 10) };
+    });
+    const totalW = weights.reduce((s, x) => s + x.w, 0);
+    const playerW = weights.find((x) => x.name === player);
+    const ntPct = totalW > 0 && playerW ? (playerW.w / totalW) * 100 : 0;
+    const pool = buildPool(nt, tn);
+    const uniq = [...new Set(pool)];
+
+    let html = `
+      <div class="group-chance-row">
+        <div class="group-chance-label">Rel. deficit (bad side)</div>
+        <div class="group-chance-bar-bg">
+          <div class="group-chance-bar" style="width:${Math.min(100, ntPct).toFixed(1)}%"></div>
+        </div>
+        <div class="group-chance-pct">${ntPct.toFixed(1)}%</div>
+      </div>
+      <div class="prob-section-label nt-lbl">Non-town roles (pool)</div>`;
+
+    for (const role of uniq.filter(isNonTownRoleId).sort()) {
+      const w = MafiaFairAssign._calcRoleSlotWeight(player, role);
+      const maxW = Math.max(...uniq.filter(isNonTownRoleId).map((r) => MafiaFairAssign._calcRoleSlotWeight(player, r)), 1e-9);
+      const pct = (w / maxW) * 100;
+      html += `<div class="prob-row">
+        <div class="prob-label" title="${role}">${role}</div>
+        <div class="prob-bar-bg"><div class="prob-bar nt" style="width:${pct.toFixed(1)}%"></div></div>
+        <div class="prob-pct">${pct.toFixed(0)}%</div>
+      </div>`;
+    }
+
+    html += `<div class="prob-section-label t-lbl">Town roles (pool)</div>`;
+    for (const role of uniq.filter(isTownRoleId).sort()) {
+      const w = MafiaFairAssign._calcRoleSlotWeight(player, role);
+      const maxW = Math.max(...uniq.filter(isTownRoleId).map((r) => MafiaFairAssign._calcRoleSlotWeight(player, r)), 1e-9);
+      const pct = (w / maxW) * 100;
+      html += `<div class="prob-row">
+        <div class="prob-label" title="${role}">${role}</div>
+        <div class="prob-bar-bg"><div class="prob-bar t" style="width:${pct.toFixed(1)}%"></div></div>
+        <div class="prob-pct">${pct.toFixed(0)}%</div>
+      </div>`;
+    }
+
+    el.innerHTML = html;
+  }
+
+  function renderHistory() {
+    const body = document.getElementById('histBody');
+    body.innerHTML = '';
+
+    const rows = rounds.slice().reverse();
+    const total = rounds.length;
+
+    for (let i = 0; i < rows.length; i++) {
+      const round = rows[i];
+      const roundN = total - i;
+      const cells = PLAYERS.map((p) => {
+        const role = round[p] || '—';
+        const cls = isNonTownRoleId(role) ? 'nt-cell' : 't-cell';
+        return '<td class="' + cls + '">' + shortRole(role) + '</td>';
+      }).join('');
+      body.insertAdjacentHTML('beforeend',
+        '<tr><td class="round-cell">' + roundN + '</td>' + cells + '</tr>');
+    }
+  }
+
+  function updateRoundCounter() {
+    const n = rounds.length;
+    document.getElementById('roundCounter').textContent =
+      n ? `Round ${n}  ·  ${n} rounds in memory` : '';
+  }
+
+  const grid = document.getElementById('playerGrid');
+  for (const p of PLAYERS) {
+    grid.insertAdjacentHTML('beforeend', `
+      <div class="card" id="card-${p}">
+        <div class="player-name">${p}</div>
+        <div class="role-name" id="role-${p}">—</div>
+        <span class="group-badge" id="badge-${p}"></span>
+      </div>`);
+  }
+
+  const head = document.getElementById('histHead');
+  head.innerHTML = '<th>#</th>' + PLAYERS.map((p) => '<th>' + p + '</th>').join('');
+
+  const sel = document.getElementById('probSelect');
+  sel.innerHTML = PLAYERS.map((p) => '<option value="' + p + '">' + p + '</option>').join('');
+
+  MafiaFairAssign.init({ getLegacyRecord: getLegacyRecord });
+  onCountChange();
+  syncBatchRunUi();
+  updateRoundCounter();
+  renderHistory();
+  renderProbs();
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mafia Game — Tests</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 20px; background: #1a1d21; color: #e0e0e0; }
+    #results { margin-top: 20px; padding: 16px; border-radius: 8px; background: rgba(255,255,255,.06); }
+    .pass { color: #4ade80; }
+    .fail { color: #f87171; }
+    pre { margin: 4px 0; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>Effect Registry & Flow Tests</h1>
+  <p>Open this file in a browser. Tests run on load.</p>
+  <div id="results"></div>
+  <div id="flowModalContainer" style="display:none"></div>
+
+  <script src="../strings.js"></script>
+  <script src="../roles.js"></script>
+  <script src="../mafia-role-assigner.js"></script>
+  <script src="../scenarios.js"></script>
+  <script src="../guides.js"></script>
+  <script src="../flow-configs/classic.js"></script>
+  <script src="../flow-configs/devil.js"></script>
+  <script src="../flow-configs/pedarkhande.js"></script>
+  <script src="../flow-configs/zodiac.js"></script>
+  <script src="../flow-configs/kabo.js"></script>
+  <script src="../flow-configs/bazras.js"></script>
+  <script src="../flow-configs/namayande.js"></script>
+  <script src="../flow-configs/standard.js"></script>
+  <script src="../flow-configs.js"></script>
+  <script src="../i18n.js"></script>
+  <script>
+    // Minimal bootstrap — flow-engine needs these globals
+    const $ = (id) => document.getElementById(id);
+    let appState = {
+      ui: { scenario: "classic", nPlayers: 5, mafiaCount: 1, toggles: {}, playerNames: ["A","B","C","D","E"] },
+      draw: {
+        players: [
+          { roleId: "mafiaBoss", alive: true },
+          { roleId: "detective", alive: true },
+          { roleId: "doctor", alive: true },
+          { roleId: "citizen", alive: true },
+          { roleId: "citizen", alive: true },
+        ],
+        uiAtDraw: { scenario: "classic" },
+      },
+      god: { flow: null, status: null },
+    };
+    function setPlayerLife(idx, opts) {
+      if (!appState.draw || !appState.draw.players[idx]) return;
+      appState.draw.players[idx].alive = opts.alive !== false;
+      appState.draw.players[idx].deathReason = opts.alive ? null : (opts.reason || "vote");
+    }
+    window._persistedState = null;
+    function saveState(state) {
+      if (state) window._persistedState = JSON.parse(JSON.stringify(state));
+    }
+    let appLang = "en";
+    function getScenario() { return appState.ui?.scenario || "classic"; }
+    function renderCast() {}
+    function escapeHtml(s) { if (s == null) return ""; const t = String(s); return t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+    let timerInterval = null;
+    let audioUnlocked = false;
+    function ensureTimers() {
+      if (!appState.god) appState.god = {};
+      if (!appState.god.timers) appState.god.timers = { talk: 50, challenge: 40, defense: 60, chaos: 120, running: null, remaining: { talk: 50, challenge: 40, defense: 60, chaos: 120 }, startedAt: null };
+    }
+    function unlockAudio() { return false; }
+    function updateTimerIcons() {}
+    function tickTimers() {}
+    function startOrPauseTimer() {}
+    function resetSingleTimer() {}
+    function showTimerPicker() {}
+    function formatMMSS(sec) {
+      const s = Math.max(0, Math.floor(sec));
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return String(m).padStart(1, "0") + ":" + String(r).padStart(2, "0");
+    }
+    function openToolModal(title, html) {
+      window._lastFlowModalHtml = html || "";
+      const el = document.getElementById("flowModalContainer");
+      if (el) el.innerHTML = html || "";
+    }
+  </script>
+  <script src="../flow-engine.js"></script>
+  <script src="../effect-registry.js"></script>
+  <script src="../flow-ui.js"></script>
+  <script src="../flow-configs/dawn.js"></script>
+  <script src="../flow-configs/dusk.js"></script>
+  <script src="../flow-configs/pedarkhande-renderers.js"></script>
+  <script src="../flow-configs/devil-renderers.js"></script>
+  <script src="test-runner.js"></script>
+  <script src="mafia-role-assigner.test.js"></script>
+  <script src="effect-registry.test.js"></script>
+  <script src="selection-persistence.test.js"></script>
+  <script src="revert-death.test.js"></script>
+  <script src="revert-vote-after-reopen.test.js"></script>
+  <script src="revert-flow-actions.test.js"></script>
+  <script src="matador-disabled.test.js"></script>
+  <script src="sixth-sense.test.js"></script>
+  <script src="status-check-eliminated.test.js"></script>
+  <script src="constantine-once-per-game.test.js"></script>
+  <script src="godfather.test.js"></script>
+  <script src="i18n-farsi.test.js"></script>
+  <script src="end-card-action.test.js"></script>
+  <script src="saul-buy-ui.test.js"></script>
+  <script src="scroll-persistence.test.js"></script>
+  <script src="player-selection-cards.test.js"></script>
+  <script src="night-step-role-filter.test.js"></script>
+  <script src="capo_test_instructions.test.js"></script>
+  <script src="scenario-helpers.js"></script>
+  <script src="devil.test.js"></script>
+  <script src="classic.test.js"></script>
+  <script src="bazras.test.js"></script>
+  <script src="zodiac.test.js"></script>
+  <script src="takavar.test.js"></script>
+  <script>
+    (function () {
+      const suites = [window.MAFIA_ROLE_ASSIGNER_TESTS, window.EFFECT_REGISTRY_TESTS, window.SELECTION_PERSISTENCE_TESTS, window.REVERT_DEATH_TESTS, window.REVERT_VOTE_AFTER_REOPEN_TESTS, window.REVERT_FLOW_ACTIONS_TESTS, window.MATADOR_DISABLED_TESTS, window.SIXTH_SENSE_TESTS, window.STATUS_CHECK_ELIMINATED_TESTS, window.CONSTANTINE_ONCE_PER_GAME_TESTS, window.GODFATHER_TESTS, window.I18N_FARSI_TESTS, window.END_CARD_ACTION_TESTS, window.SAUL_BUY_UI_TESTS, window.SCROLL_PERSISTENCE_TESTS, window.PLAYER_SELECTION_CARDS_TESTS, window.NIGHT_STEP_ROLE_FILTER_TESTS, window.CAPO_TEST_INSTRUCTIONS_TESTS, window.DEVIL_TESTS, window.CLASSIC_TESTS, window.BAZRAS_TESTS, window.ZODIAC_TESTS, window.TAKAVAR_TESTS].filter(Boolean);
+      if (!suites.length || typeof runTests !== "function") {
+        document.getElementById("results").innerHTML = "<p class='fail'>Tests not loaded.</p>";
+        return;
+      }
+      const result = runTests(suites);
+      const el = document.getElementById("results");
+      let html = "<p><strong>" + result.total + " tests</strong>: <span class='pass'>" + result.passed + " passed</span>";
+      if (result.failed) html += ", <span class='fail'>" + result.failed + " failed</span>";
+      html += "</p>";
+      result.logs.forEach((l) => {
+        html += "<pre class='" + (l.isError ? "fail" : "pass") + "'>" + (l.msg || "").replace(/</g, "&lt;") + "</pre>";
+      });
+      el.innerHTML = html;
+    })();
+  </script>
+</body>
+</html>
